@@ -1,0 +1,20 @@
+{
+    "name": "trello-server",
+    "version": "1.0.0",
+    "description": "This is the backend server for my trello clone project made in Next js",
+    "main": "src/index.js",
+    "scripts": {
+        "dev": "node src/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Adnan Hussain",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.1",
+        "express": "^4.18.2",
+        "mongoose": "^8.1.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.3"
+    }
+}
