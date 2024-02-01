@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.schema;
 
-const todoSchema = new Schema({
+const todoSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -12,7 +11,7 @@ const todoSchema = new Schema({
         required: true,
     },
 
-    category: {
+    status: {
         type: String,
         enum: ["todo", "inprogress", "done"],
         required: true,
@@ -22,8 +21,13 @@ const todoSchema = new Schema({
     image_id: {
         type: String,
     },
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
-const Todo = mongoose.model("User", todoSchema);
+const Todo = mongoose.model("Todo", todoSchema);
 
 module.exports = Todo;

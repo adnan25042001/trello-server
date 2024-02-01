@@ -23,7 +23,7 @@ router.post(
         if (!errors.isEmpty()) {
             return res
                 .status(400)
-                .json({ success: false, errors: errors.array() });
+                .json({ success: false, errors: errors.array()[0] });
         }
 
         const salt = await bcrypt.genSalt(12);
@@ -54,7 +54,7 @@ router.post(
                         };
 
                         const authtoken = jwt.sign(data, JWT_SECRET);
-                        
+
                         res.json({
                             success: true,
                             authtoken: authtoken,
@@ -88,6 +88,9 @@ router.post(
         }),
     ],
     async (req, res) => {
+
+        console.log(req.body);
+
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res
@@ -108,9 +111,10 @@ router.post(
                     .compare(req.body.password, existingUser.password)
                     .then((passwordCompare) => {
                         if (!passwordCompare) {
-                            return res
-                                .status(400)
-                                .json({ error: "Wrong email or password!" });
+                            return res.status(400).json({
+                                success: false,
+                                error: "Wrong email or password!",
+                            });
                         }
 
                         const data = {
@@ -146,7 +150,7 @@ router.post(
 router.get("/getuser", fetchUser, async (req, res) => {
     try {
         const userId = req.user.id;
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId).select("-password", "-email");
         if (user) {
             res.send({ success: true, user });
         } else {
